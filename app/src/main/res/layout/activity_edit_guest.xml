@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditGuestActivity"
+    android:background="#F2EFE5"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="354dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_rounded"
+        android:backgroundTint="#E3E1D9"
+        android:orientation="vertical"
+        android:padding="30dp">
+
+        <EditText
+            android:id="@+id/edit_guest_fullName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_rounded"
+            android:backgroundTint="#F2EFE5"
+            android:ems="10"
+            android:hint="Полное имя гостя"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp" />
+
+        <EditText
+            android:id="@+id/edit_guest_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_rounded"
+            android:backgroundTint="#F2EFE5"
+            android:ems="10"
+            android:hint="Дата ГГГГ-ММ-ДД"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp" />
+
+        <EditText
+            android:id="@+id/edit_guest_timeFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_rounded"
+            android:backgroundTint="#F2EFE5"
+            android:ems="10"
+            android:hint="С ЧЧ:ММ"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp" />
+
+        <EditText
+            android:id="@+id/edit_guest_timeTo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_rounded"
+            android:backgroundTint="#F2EFE5"
+            android:ems="10"
+            android:hint="По ЧЧ:ММ"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp" />
+
+        <EditText
+            android:id="@+id/edit_guest_statusId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/login_rounded"
+            android:backgroundTint="#F2EFE5"
+            android:ems="10"
+            android:hint="Статус"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/edit_guest_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/login_rounded"
+                android:backgroundTint="#F2EFE5"
+                android:text="Отменить"
+                android:layout_marginRight="10dp" />
+
+            <Button
+                android:id="@+id/edit_guest_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/login_rounded"
+                android:backgroundTint="#F2EFE5"
+                android:text="Сохранить" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

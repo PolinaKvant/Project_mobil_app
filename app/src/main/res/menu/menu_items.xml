@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_repairs"
+        android:title="Ремонт"
+        android:icon="@drawable/icon_repairs"/>
+    <item
+        android:id="@+id/menu_guests"
+        android:title="Гости"
+        android:icon="@drawable/icon_guests"/>
+    <item
+        android:id="@+id/menu_logout"
+        android:title="Выйти"
+        android:icon="@drawable/icon_logout"
+        />
+</menu>
