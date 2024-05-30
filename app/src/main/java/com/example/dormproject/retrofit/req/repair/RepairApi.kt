@@ -1,5 +1,11 @@
 package com.example.dormproject.retrofit.req.repair
 
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairCreateRepairRequest
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairCreateRepairResponse
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairEditRepairByIdRequest
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairEditRepairByIdResponse
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairGetAllRepairsResponse
+import com.example.dormproject.retrofit.req.repair.data.ReqRepairGetRepairByIdResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -12,10 +18,10 @@ interface RepairApi {
     suspend fun reqRepairCreateRepairRequest(@Body body: ReqRepairCreateRepairRequest): ReqRepairCreateRepairResponse
 
     @DELETE("req/repair/{id}")
-    suspend fun reqGuestDeleteRepairByIdRequest(@Path("id") id: Int)
+    suspend fun reqRepairDeleteRepairByIdRequest(@Path("id") id: Int)
 
     @PATCH("req/repair/{id}")
-    suspend fun reqGuestEditGuestById(@Path("id") id: Int, @Body body: ReqRepairEditRepairByIdRequest): ReqRepairEditRepairByIdResponse
+    suspend fun reqRepairEditGuestById(@Path("id") id: Int, @Body body: ReqRepairEditRepairByIdRequest): ReqRepairEditRepairByIdResponse
 
     @GET("req/repair")
     suspend fun reqRepairGetAllRepairs(): ReqRepairGetAllRepairsResponse

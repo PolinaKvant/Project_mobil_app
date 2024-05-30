@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F2EFE5"
-    tools:context=".GeneralGuestsActivity">
+    tools:context=".activitys.GeneralGuestsActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout2"

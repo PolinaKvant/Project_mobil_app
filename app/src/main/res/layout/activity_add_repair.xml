@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddRepairActivity"
+    tools:context=".activitys.AddRepairActivity"
     android:background="#F2EFE5"
     android:gravity="center">
 
