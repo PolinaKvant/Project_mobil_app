@@ -12,7 +12,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="80dp"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp"
@@ -24,23 +24,22 @@
             android:id="@+id/repairList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="60dp"
-  />
+            android:layout_marginTop="60dp" />
 
         <Button
             android:id="@+id/general_repair_add"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="60dp"
             android:background="@drawable/login_rounded"
             android:backgroundTint="#E3E1D9"
-            android:layout_marginBottom="60dp"
             android:text="Добавить заявку" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/nav_bg"
         app:itemIconSize="30sp"
