@@ -14,6 +14,7 @@ import com.example.dormproject.adapters.guest.ItemGuestAdapter
 import com.example.dormproject.adapters.guest.ItemGuestAdapterDataClass
 import com.example.dormproject.R
 import com.example.dormproject.ApiService
+import com.example.dormproject.CookieManager
 import com.example.dormproject.retrofit.req.guest.GuestApi
 import com.example.dormproject.retrofit.req.guest.data.ReqGuestGetAllGuestsListItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -30,6 +31,9 @@ class GeneralGuestsActivity : AppCompatActivity() {
     private val addGuestButton by lazy { findViewById<Button>(R.id.general_guest_add) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        lateinit var cookieManager: CookieManager
+
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_general_guests)

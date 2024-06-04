@@ -16,6 +16,12 @@
         android:orientation="vertical"
         android:padding="30dp">
 
+        <TextView
+            android:id="@+id/edit_guest_fullName_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Полное имя гостя" />
+
         <EditText
             android:id="@+id/edit_guest_fullName"
             android:layout_width="match_parent"
@@ -28,6 +34,12 @@
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
+
+        <TextView
+            android:id="@+id/edit_guest_date_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Дата ГГГГ-ММ-ДД" />
 
         <EditText
             android:id="@+id/edit_guest_date"
@@ -42,6 +54,12 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
 
+        <TextView
+            android:id="@+id/edit_guest_timeFrom_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="С ЧЧ:ММ" />
+
         <EditText
             android:id="@+id/edit_guest_timeFrom"
             android:layout_width="match_parent"
@@ -55,6 +73,12 @@
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
 
+        <TextView
+            android:id="@+id/edit_guest_timeTo_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="По ЧЧ:ММ" />
+
         <EditText
             android:id="@+id/edit_guest_timeTo"
             android:layout_width="match_parent"
@@ -67,6 +91,12 @@
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
+
+        <TextView
+            android:id="@+id/edit_guest_statusId_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Статус" />
 
         <EditText
             android:id="@+id/edit_guest_statusId"
