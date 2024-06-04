@@ -21,7 +21,7 @@
             android:id="@+id/edit_repair_title_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Название заявки" />
+            android:text="@string/repair_title" />
 
         <EditText
             android:id="@+id/edit_repair_title"
@@ -31,7 +31,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Название заявки"
+            android:hint="@string/repair_title"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -40,7 +40,7 @@
             android:id="@+id/edit_repair_description_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Описание заявки" />
+            android:text="@string/repair_description" />
 
         <EditText
             android:id="@+id/edit_repair_description"
@@ -50,7 +50,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Описание заявки"
+            android:hint="@string/repair_description"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -59,7 +59,7 @@
             android:id="@+id/edit_repair_responsible_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ответственный" />
+            android:text="@string/repair_responsible" />
 
         <EditText
             android:id="@+id/edit_repair_responsible"
@@ -69,7 +69,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Ответственный"
+            android:hint="@string/repair_responsible"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -78,7 +78,7 @@
             android:id="@+id/edit_repair_status_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Статус" />
+            android:text="@string/status_text" />
 
         <EditText
             android:id="@+id/edit_repair_status"
@@ -88,7 +88,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Статус"
+            android:hint="@string/status_text"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -106,7 +106,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Отменить"
+                android:text="@string/text_cancel"
                 android:layout_marginRight="10dp" />
 
             <Button
@@ -116,7 +116,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Сохранить" />
+                android:text="@string/text_save" />
         </LinearLayout>
 
     </LinearLayout>

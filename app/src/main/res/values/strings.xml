@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">dormproject</string>
+    <string name="full_name_guest">Полное имя гостя</string>
+    <string name="guest_date_text">Дата ГГГГ-ММ-ДД</string>
+    <string name="guest_timeFrom_text">С ЧЧ:ММ:CC</string>
+    <string name="guest_timeTo_text">По ЧЧ:ММ:CC</string>
+    <string name="status_text">Статус</string>
+    <string name="text_cancel">Отменить</string>
+    <string name="text_save">Сохранить</string>
+    <string name="text_create">Создать</string>
+    <string name="repair_title">Название заявки</string>
+    <string name="repair_description">Описание заявки</string>
+    <string name="repair_responsible">Ответственный</string>
 </resources>

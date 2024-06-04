@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:fontFamily="@font/roboto_medium"
-        android:text="Полное имя гостя"
+        android:text="@string/full_name_guest"
         android:textSize="18sp"
         tools:textAlignment="center" />
 

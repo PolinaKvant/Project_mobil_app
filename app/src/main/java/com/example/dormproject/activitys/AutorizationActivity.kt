@@ -2,7 +2,6 @@ package com.example.dormproject.activitys
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -43,17 +42,13 @@ class AutorizationActivity : AppCompatActivity() {
                     val response = authApi.authLogin(AuthLoginRequest(login.text.toString(), password.text.toString()))
                     withContext(Dispatchers.Main) {
                         if (response.accessToken.isNotEmpty()) {
-                            Log.d("AutorizationActivity", "Login successful: ${response.accessToken}")
                             startActivity(Intent(this@AutorizationActivity, GeneralRepairsActivity::class.java))
                             finish()
-                        } else {
-                            Log.d("AutorizationActivity", "Login failed: empty accessToken")
                         }
                     }
                 } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
                         val newE = e.toString().replace("java.io.IOException: ", "")
-                        Log.e("AutorizationActivity", "Login error: $newE")
                         Toast.makeText(this@AutorizationActivity, "Неправильный логин или пароль, Код ошибки: $newE", Toast.LENGTH_SHORT).show()
                     }
                 }

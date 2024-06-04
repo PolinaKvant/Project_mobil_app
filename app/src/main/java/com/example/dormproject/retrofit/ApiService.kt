@@ -47,4 +47,8 @@ object ApiService {
     fun isUserLoggedIn(): Boolean {
         return cookieManager.isUserLoggedIn()
     }
+
+    fun logout() {
+        cookieManager.logout()
+    }
 }

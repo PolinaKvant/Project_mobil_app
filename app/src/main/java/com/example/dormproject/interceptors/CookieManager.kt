@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import okhttp3.Cookie
 import okhttp3.CookieJar
 import okhttp3.HttpUrl
-import android.util.Log
 
 class CookieManager(context: Context) : CookieJar {
 
@@ -16,7 +15,6 @@ class CookieManager(context: Context) : CookieJar {
         val editor = preferences.edit()
         cookies.forEach { cookie ->
             editor.putString(cookie.name, cookie.toString())
-            Log.d("CookieManager", "Saved cookie: ${cookie.name}=${cookie.value}")
         }
         editor.apply()
     }
@@ -28,7 +26,6 @@ class CookieManager(context: Context) : CookieJar {
             val cookie = Cookie.parse(url, cookieString)
             if (cookie != null) {
                 cookies.add(cookie)
-                Log.d("CookieManager", "Loaded cookie: $key=${cookie.value}")
             }
         }
         return cookies
@@ -36,12 +33,14 @@ class CookieManager(context: Context) : CookieJar {
 
     fun isUserLoggedIn(): Boolean {
         val isLoggedIn = preferences.all.keys.contains("jwt")
-        Log.d("CookieManager", "Is user logged in: $isLoggedIn")
         return isLoggedIn
+    }
+
+    fun logout() {
+        clearCookies()
     }
 
     fun clearCookies() {
         preferences.edit().clear().apply()
-        Log.d("CookieManager", "Cleared cookies")
     }
 }

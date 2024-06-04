@@ -43,8 +43,6 @@ class GeneralGuestsActivity : AppCompatActivity() {
             insets
         }
 
-        Toast.makeText(this, "User is logged in: ${ApiService.isUserLoggedIn()}", Toast.LENGTH_SHORT).show()
-
         navBar.selectedItemId = R.id.menu_guests
 
         navBar.setOnItemSelectedListener {
@@ -58,7 +56,7 @@ class GeneralGuestsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_logout -> {
-                    Toast.makeText(this, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
+                    ApiService.logout()
                     startActivity(Intent(this, MainActivity::class.java))
                     true
                 }

@@ -25,7 +25,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Название заявки"
+            android:hint="@string/repair_title"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -38,7 +38,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Описание заявки"
+            android:hint="@string/repair_description"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -56,7 +56,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Отменить"
+                android:text="@string/text_cancel"
                 android:layout_marginRight="10dp" />
 
             <Button
@@ -66,7 +66,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Создать" />
+                android:text="@string/text_create" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

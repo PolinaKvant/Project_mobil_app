@@ -39,8 +39,6 @@ class GeneralRepairsActivity : AppCompatActivity() {
             insets
         }
 
-        Toast.makeText(this, "User is logged in: ${ApiService.isUserLoggedIn()}", Toast.LENGTH_SHORT).show()
-
         navBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_guests -> {
@@ -52,6 +50,7 @@ class GeneralRepairsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_logout -> {
+                    ApiService.logout()
                     Toast.makeText(this, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     true

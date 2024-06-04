@@ -20,7 +20,7 @@
             android:id="@+id/edit_guest_fullName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Полное имя гостя" />
+            android:text="@string/full_name_guest" />
 
         <EditText
             android:id="@+id/edit_guest_fullName"
@@ -30,7 +30,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Полное имя гостя"
+            android:hint="@string/full_name_guest"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -39,7 +39,7 @@
             android:id="@+id/edit_guest_date_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Дата ГГГГ-ММ-ДД" />
+            android:text="@string/guest_date_text" />
 
         <EditText
             android:id="@+id/edit_guest_date"
@@ -49,7 +49,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Дата ГГГГ-ММ-ДД"
+            android:hint="@string/guest_date_text"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -58,7 +58,7 @@
             android:id="@+id/edit_guest_timeFrom_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="С ЧЧ:ММ" />
+            android:text="@string/guest_timeFrom_text" />
 
         <EditText
             android:id="@+id/edit_guest_timeFrom"
@@ -68,7 +68,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="С ЧЧ:ММ"
+            android:hint="@string/guest_timeFrom_text"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -77,7 +77,7 @@
             android:id="@+id/edit_guest_timeTo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="По ЧЧ:ММ" />
+            android:text="@string/guest_timeTo_text" />
 
         <EditText
             android:id="@+id/edit_guest_timeTo"
@@ -87,7 +87,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="По ЧЧ:ММ"
+            android:hint="@string/guest_timeTo_text"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -96,7 +96,7 @@
             android:id="@+id/edit_guest_statusId_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Статус" />
+            android:text="@string/status_text" />
 
         <EditText
             android:id="@+id/edit_guest_statusId"
@@ -106,7 +106,7 @@
             android:background="@drawable/login_rounded"
             android:backgroundTint="#F2EFE5"
             android:ems="10"
-            android:hint="Статус"
+            android:hint="@string/status_text"
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
@@ -124,7 +124,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Отменить"
+                android:text="@string/text_cancel"
                 android:layout_marginRight="10dp" />
 
             <Button
@@ -134,7 +134,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Сохранить" />
+                android:text="@string/text_save" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
