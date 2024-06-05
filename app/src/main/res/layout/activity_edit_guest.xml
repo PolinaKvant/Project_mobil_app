@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="@string/status_text" />
 
-        <EditText
+        <Spinner
             android:id="@+id/edit_guest_statusId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

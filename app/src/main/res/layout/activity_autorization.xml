@@ -57,7 +57,7 @@
             android:backgroundTint="#F2EFE5"
             android:ems="10"
             android:hint="Пароль"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
 
@@ -86,7 +86,8 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Регистрация" />
+
+                android:text="К регистрации" />
         </LinearLayout>
     </LinearLayout>
 

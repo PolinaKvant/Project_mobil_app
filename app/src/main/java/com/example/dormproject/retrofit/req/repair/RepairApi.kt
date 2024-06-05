@@ -14,6 +14,12 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface RepairApi {
+    @GET("req/repair")
+    suspend fun reqRepairGetAllRepairs(): ReqRepairGetAllRepairsResponse
+
+    @GET("req/repair/{id}")
+    suspend fun reqRepairGetRepairById(@Path("id") id: Int): ReqRepairGetRepairByIdResponse
+
     @POST("req/repair")
     suspend fun reqRepairCreateRepairRequest(@Body body: ReqRepairCreateRepairRequest): ReqRepairCreateRepairResponse
 
@@ -22,10 +28,4 @@ interface RepairApi {
 
     @PATCH("req/repair/{id}")
     suspend fun reqRepairEditGuestById(@Path("id") id: Int, @Body body: ReqRepairEditRepairByIdRequest): ReqRepairEditRepairByIdResponse
-
-    @GET("req/repair")
-    suspend fun reqRepairGetAllRepairs(): ReqRepairGetAllRepairsResponse
-
-    @GET("req/repair/{id}")
-    suspend fun reqRepairGetRepairById(@Path("id") id: Int): ReqRepairGetRepairByIdResponse
 }

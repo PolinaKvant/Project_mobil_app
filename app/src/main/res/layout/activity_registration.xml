@@ -56,7 +56,7 @@
             android:backgroundTint="#F2EFE5"
             android:ems="10"
             android:hint="Пароль"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
 
@@ -69,7 +69,7 @@
             android:backgroundTint="#F2EFE5"
             android:ems="10"
             android:hint="Повторите пароль"
-            android:inputType="text"
+            android:inputType="textPassword"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
 
@@ -110,7 +110,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Регистрация" />
+                android:text="Зарегистрироваться" />
 
             <Button
                 android:id="@+id/register_to_auth"
@@ -121,7 +121,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/login_rounded"
                 android:backgroundTint="#F2EFE5"
-                android:text="Вход" />
+                android:text="Авторизоваться" />
         </LinearLayout>
     </LinearLayout>
 

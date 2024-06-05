@@ -24,6 +24,7 @@ class AutorizationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_autorization)
 
         val loginButton: Button by lazy { findViewById<Button>(R.id.loginButton) }
+        val registrationButton: Button by lazy { findViewById<Button>(R.id.register_to_auth) }
         val login: EditText by lazy { findViewById<EditText>(R.id.auth_input_login) }
         val password: EditText by lazy { findViewById<EditText>(R.id.auth_input_password) }
 
@@ -53,6 +54,10 @@ class AutorizationActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        registrationButton.setOnClickListener {
+            startActivity(Intent(this, RegistrationActivity::class.java))
         }
     }
 }

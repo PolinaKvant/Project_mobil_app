@@ -3,8 +3,10 @@ package com.example.dormproject.activitys
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +31,12 @@ class EditGuestActivity : AppCompatActivity() {
     private val dateInput: EditText by lazy { findViewById(R.id.edit_guest_date) }
     private val timeFromInput: EditText by lazy { findViewById(R.id.edit_guest_timeFrom) }
     private val timeToInput: EditText by lazy { findViewById(R.id.edit_guest_timeTo) }
-    private val statusInput: EditText by lazy { findViewById(R.id.edit_guest_statusId) }
-    private val fullNameInputText: EditText by lazy { findViewById(R.id.edit_guest_fullName_text) }
-    private val dateInputText: EditText by lazy { findViewById(R.id.edit_guest_date_text) }
-    private val timeFromInputText: EditText by lazy { findViewById(R.id.edit_guest_timeFrom_text) }
-    private val timeToInputText: EditText by lazy { findViewById(R.id.edit_guest_timeTo_text) }
-    private val statusInputText: EditText by lazy { findViewById(R.id.edit_guest_statusId_text) }
+    private val statusSpinner: Spinner by lazy { findViewById(R.id.edit_guest_statusId) }
+    private val fullNameInputText: View? by lazy { findViewById(R.id.edit_guest_fullName_text) }
+    private val dateInputText: View? by lazy { findViewById(R.id.edit_guest_date_text) }
+    private val timeFromInputText: View? by lazy { findViewById(R.id.edit_guest_timeFrom_text) }
+    private val timeToInputText: View? by lazy { findViewById(R.id.edit_guest_timeTo_text) }
+    private val statusSpinnerText: View? by lazy { findViewById(R.id.edit_guest_statusId_text) }
     private val cancelButton: Button by lazy { findViewById(R.id.edit_guest_cancel) }
     private val submitButton: Button by lazy { findViewById(R.id.edit_guest_submit) }
 
@@ -42,6 +44,7 @@ class EditGuestActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_edit_guest)
+        setupSpinner()
         setupWindowInsets()
 
         val itemId = intent.getSerializableExtra("itemID") as? Int
@@ -51,6 +54,7 @@ class EditGuestActivity : AppCompatActivity() {
 
         cancelButton.setOnClickListener {
             startActivity(Intent(this, GeneralGuestsActivity::class.java))
+            finish()
         }
 
         submitButton.setOnClickListener {
@@ -88,57 +92,92 @@ class EditGuestActivity : AppCompatActivity() {
     private fun populateFields(
         guest: ReqGuestGetGuestByIdResponse, roleId: Int
     ) {
-        guest.guestRequestList[0].apply {
-            fullNameInput.setText(fullName)
-            dateInput.setText(date)
-            timeFromInput.setText(timeFrom)
-            timeToInput.setText(timeTo)
-            statusInput.setText(statusId.toString())
-        }
+        if(guest.guestRequestList.isEmpty()) {
+            showToast("Невозможно отредактировать запись")
+            startActivity(
+                Intent(
+                    this@EditGuestActivity,
+                    GeneralGuestsActivity::class.java
+                )
+            )
+            finish()
+        } else {
+            guest.guestRequestList[0].apply {
+                fullNameInput.setText(fullName)
+                dateInput.setText(date)
+                timeFromInput.setText(timeFrom)
+                timeToInput.setText(timeTo)
+                statusSpinner.setSelection(
+                    if (statusId == 0) 0
+                    else if (statusId == 1) 1
+                    else if (statusId == 2) 2
+                    else 3
+                )
+            }
+            setVisibility(roleId != 1, statusSpinner, statusSpinnerText)
+            setVisibility(
+                roleId != 3,
+                fullNameInput,
+                fullNameInputText,
+                dateInput,
+                dateInputText,
+                timeFromInput,
+                timeFromInputText,
+                timeToInput,
+                timeToInputText
+            )
 
-        setVisibility(roleId != 1, statusInput, statusInputText)
-        setVisibility(
-            roleId != 3,
-            fullNameInput,
-            fullNameInputText,
-            dateInput,
-            dateInputText,
-            timeFromInput,
-            timeFromInputText,
-            timeToInput,
-            timeToInputText
-        )
-
-        if (guest.guestRequestList[0].statusId != 0) {
-            showToast("Вы не можете редактировать запись")
-            startActivity(Intent(this, GeneralGuestsActivity::class.java))
+            if (guest.guestRequestList[0].statusId != 0) {
+                showToast("Вы не можете редактировать запись")
+                startActivity(Intent(this, GeneralGuestsActivity::class.java))
+                finish()
+            }
         }
     }
 
-    private fun setVisibility(isVisible: Boolean, vararg views: View) {
+    private fun setVisibility(isVisible: Boolean, vararg views: View?) {
         val visibility = if (isVisible) View.VISIBLE else View.GONE
-        views.forEach { it.visibility = visibility }
+        views.forEach { it?.visibility = visibility }
     }
 
     private fun submitData(itemId: Int) {
         if (validateInputs()) {
             CoroutineScope(Dispatchers.Main).launch {
                 try {
+                    val statusId = getStatusIdFromSpinner(statusSpinner.selectedItem.toString())
                     guestApi.reqGuestEditGuestById(
                         itemId, ReqGuestEditGuestByIdRequest(
                             fullNameInput.text.toString(),
                             dateInput.text.toString(),
                             timeFromInput.text.toString(),
                             timeToInput.text.toString(),
-                            statusInput.text.toString().toInt()
+                            statusId
                         )
                     )
                     showToast("Запись обновлена")
                     startActivity(Intent(this@EditGuestActivity, GeneralGuestsActivity::class.java))
+                    finish()
                 } catch (e: Exception) {
                     showToast("Произошла ошибка: ${e.message}")
                 }
             }
+        }
+    }
+
+    private fun setupSpinner() {
+        val listGuestStatuses = listOf("Создана", "Принята", "Отклонена", "Архивирована")
+        val arrayAdapter =
+            ArrayAdapter(this, android.R.layout.simple_spinner_item, listGuestStatuses)
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        statusSpinner.adapter = arrayAdapter
+    }
+
+    private fun getStatusIdFromSpinner(status: String): Int {
+        return when (status) {
+            "Создана" -> 0
+            "Принята" -> 1
+            "Отклонена" -> 2
+            else -> 3
         }
     }
 
@@ -161,11 +200,6 @@ class EditGuestActivity : AppCompatActivity() {
             timeToInput.error = "Заполните поле"
             isValid = false
         }
-        if (statusInput.text.isEmpty()) {
-            statusInput.error = "Заполните поле"
-            isValid = false
-        }
-
         if (!isValid) {
             showToast("Заполните все поля")
         }

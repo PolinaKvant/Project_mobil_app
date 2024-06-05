@@ -94,19 +94,19 @@
             android:id="@+id/item_guest_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
             android:layout_weight="1"
-            android:text="Редактировать"
             android:background="@drawable/login_rounded"
-            android:backgroundTint="#F2EFE5" />
+            android:backgroundTint="#F2EFE5"
+            android:text="Редактировать" />
 
         <Button
             android:id="@+id/item_guest_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
             android:layout_weight="1"
-            android:text="Удалить"
             android:background="@drawable/login_rounded"
-            android:backgroundTint="#F2EFE5" />
+            android:backgroundTint="#F2EFE5"
+            android:text="Удалить" />
     </LinearLayout>
 </LinearLayout>

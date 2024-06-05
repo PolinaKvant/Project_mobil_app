@@ -6,9 +6,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.dormproject.ApiService
 import com.example.dormproject.R
+import com.example.dormproject.retrofit.req.role.RoleApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ItemGuestAdapter(var data: ItemGuestAdapterDataClass) : RecyclerView.Adapter<ItemGuestAdapter.MyViewHolder>() {
+class ItemGuestAdapter(var data: ItemGuestAdapterDataClass) :
+    RecyclerView.Adapter<ItemGuestAdapter.MyViewHolder>() {
 
     class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val fullName: TextView = view.findViewById(R.id.item_guest_fullName)
@@ -27,16 +34,29 @@ class ItemGuestAdapter(var data: ItemGuestAdapterDataClass) : RecyclerView.Adapt
     override fun getItemCount(): Int = data.items.size
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = ApiService.createService(RoleApi::class.java).getMyRole()
+                withContext(Dispatchers.Main) {
+                    if (response.roleId == 3) {
+                        holder.delete.visibility = View.GONE
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    val newE = e.toString().replace("java.io.IOException: ", "")
+                }
+            }
+        }
         val item = data.items[position]
         holder.fullName.text = item.fullName
         holder.date.text = item.date
         holder.dateTime.text = "${item.timeFrom} ${item.timeTo}"
         holder.status.text = when (item.statusId) {
             0 -> "Создана"
-            1 -> "В работе"
-            2 -> "Готово"
-            3 -> "Отклонено"
-            4 -> "Отменена"
+            1 -> "Принята"
+            2 -> "Отклонена"
+            3 -> "Архивирована"
             else -> item.statusId.toString()
         }
 
