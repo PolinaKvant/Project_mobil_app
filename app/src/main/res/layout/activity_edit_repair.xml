@@ -56,25 +56,6 @@
             android:paddingVertical="10dp" />
 
         <TextView
-            android:id="@+id/edit_repair_responsible_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/repair_responsible" />
-
-        <EditText
-            android:id="@+id/edit_repair_responsible"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:background="@drawable/login_rounded"
-            android:backgroundTint="#F2EFE5"
-            android:ems="10"
-            android:hint="@string/repair_responsible"
-            android:inputType="text"
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="10dp" />
-
-        <TextView
             android:id="@+id/edit_repair_status_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

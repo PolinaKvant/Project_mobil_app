@@ -16,6 +16,7 @@ import com.example.dormproject.R
 import com.example.dormproject.ApiService
 import com.example.dormproject.retrofit.req.repair.RepairApi
 import com.example.dormproject.retrofit.req.repair.data.ReqRepairGetAllRepairsListItem
+import com.example.dormproject.retrofit.req.role.RoleApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +25,7 @@ import kotlinx.coroutines.withContext
 
 class GeneralRepairsActivity : AppCompatActivity() {
 
+    private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val repairApi: RepairApi by lazy { ApiService.createService(RepairApi::class.java) }
     private val itemList: RecyclerView by lazy { findViewById<RecyclerView>(R.id.repairList) }
     private val navBar by lazy { findViewById<BottomNavigationView>(R.id.nav_bar) }
@@ -60,9 +62,30 @@ class GeneralRepairsActivity : AppCompatActivity() {
         }
 
         setNewList()
+        hideAddButton()
 
         addRepairButton.setOnClickListener {
             startActivity(Intent(this, AddRepairActivity::class.java))
+        }
+    }
+
+    private fun hideAddButton() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = roleApi.getMyRole()
+                withContext(Dispatchers.Main) {
+                    if (response.roleId == 3) {
+                        addRepairButton.visibility = Button.GONE
+                    } else {
+                        addRepairButton.visibility = Button.VISIBLE
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    val newE = e.toString().replace("java.io.IOException: ", "")
+                    Toast.makeText(this@GeneralRepairsActivity, "Проблема с удалением, Код ошибки: $newE", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

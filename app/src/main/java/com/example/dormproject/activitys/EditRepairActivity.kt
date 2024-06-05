@@ -30,11 +30,9 @@ class EditRepairActivity : AppCompatActivity() {
     private val titleInput: EditText by lazy { findViewById(R.id.edit_repair_title) }
     private val descriptionInput: EditText by lazy { findViewById(R.id.edit_repair_description) }
     private val statusSpinner: Spinner by lazy { findViewById(R.id.edit_repair_status) }
-    private val responsibleInput: EditText by lazy { findViewById(R.id.edit_repair_responsible) }
     private val titleInputText: View? by lazy { findViewById(R.id.edit_repair_title_text) }
     private val descriptionInputText: View? by lazy { findViewById(R.id.edit_repair_description_text) }
     private val statusInputText: View? by lazy { findViewById(R.id.edit_repair_status_text) }
-    private val responsibleInputText: View? by lazy { findViewById(R.id.edit_repair_responsible_text) }
     private val cancelButton: Button by lazy { findViewById(R.id.edit_repair_cancel) }
     private val submitButton: Button by lazy { findViewById(R.id.edit_repair_submit) }
 
@@ -96,7 +94,7 @@ class EditRepairActivity : AppCompatActivity() {
     }
 
     private fun populateFields(repair: ReqRepairGetRepairByIdResponse, roleId: Int) {
-        if(repair.guestRequestList.isEmpty()) {
+        if (repair.guestRequestList.isEmpty()) {
             showToast("Невозможно отредактировать запись")
             startActivity(Intent(this, GeneralRepairsActivity::class.java))
             finish()
@@ -105,22 +103,19 @@ class EditRepairActivity : AppCompatActivity() {
                 titleInput.setText(title)
                 descriptionInput.setText(description)
                 statusSpinner.setSelection(getStatusSelection(statusId))
-                responsibleInput.setText(responsible.toString())
             }
 
             setVisibility(
                 roleId != 1,
                 statusSpinner,
                 statusInputText,
-                responsibleInput,
-                responsibleInputText
             )
             setVisibility(
                 roleId != 3,
                 titleInput,
                 titleInputText,
                 descriptionInput,
-                descriptionInputText
+                descriptionInputText,
             )
 
             if (repair.guestRequestList[0].statusId != 0) {
@@ -148,11 +143,12 @@ class EditRepairActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val statusId = getStatusIdFromSpinner(statusSpinner.selectedItem.toString())
+                val response = repairApi.reqRepairGetRepairById(itemId)
 
                 repairApi.reqRepairEditGuestById(
                     itemId, ReqRepairEditRepairByIdRequest(
                         titleInput.text.toString(),
-                        responsibleInput.text.toString().toInt(),
+                        response.guestRequestList[0].responsible,
                         descriptionInput.text.toString(),
                         statusId
                     )

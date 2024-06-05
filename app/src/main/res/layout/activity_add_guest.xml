@@ -21,6 +21,7 @@
             android:id="@+id/add_guest_fullName_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="@string/full_name_guest" />
 
         <EditText
@@ -40,6 +41,7 @@
             android:id="@+id/add_guest_date_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="@string/guest_date_text" />
 
         <EditText
@@ -59,6 +61,7 @@
             android:id="@+id/add_guest_timeFrom_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="@string/guest_timeFrom_text" />
 
         <EditText
@@ -78,6 +81,7 @@
             android:id="@+id/add_guest_timeTo_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:text="@string/guest_timeTo_text" />
 
         <EditText

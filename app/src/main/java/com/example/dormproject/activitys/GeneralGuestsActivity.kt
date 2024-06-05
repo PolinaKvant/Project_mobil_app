@@ -17,6 +17,7 @@ import com.example.dormproject.ApiService
 import com.example.dormproject.CookieManager
 import com.example.dormproject.retrofit.req.guest.GuestApi
 import com.example.dormproject.retrofit.req.guest.data.ReqGuestGetAllGuestsListItem
+import com.example.dormproject.retrofit.req.role.RoleApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +26,7 @@ import kotlinx.coroutines.withContext
 
 class GeneralGuestsActivity : AppCompatActivity() {
 
+    private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val guestApi: GuestApi by lazy { ApiService.createService(GuestApi::class.java) }
     private val itemList: RecyclerView by lazy { findViewById<RecyclerView>(R.id.guestList) }
     private val navBar by lazy { findViewById<BottomNavigationView>(R.id.nav_bar_guest) }
@@ -65,9 +67,30 @@ class GeneralGuestsActivity : AppCompatActivity() {
         }
 
         setNewList()
+        hideAddButton()
 
         addGuestButton.setOnClickListener {
             startActivity(Intent(this, AddGuestActivity::class.java))
+        }
+    }
+
+    private fun hideAddButton() {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val response = roleApi.getMyRole()
+                withContext(Dispatchers.Main) {
+                    if (response.roleId == 3) {
+                        addGuestButton.visibility = Button.GONE
+                    } else {
+                        addGuestButton.visibility = Button.VISIBLE
+                    }
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    val newE = e.toString().replace("java.io.IOException: ", "")
+                    Toast.makeText(this@GeneralGuestsActivity, "Проблема с получением данных, Код ошибки: $newE", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

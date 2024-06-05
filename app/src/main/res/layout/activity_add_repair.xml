@@ -17,6 +17,13 @@
         android:orientation="vertical"
         android:padding="30dp">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/repair_title" />
+
         <EditText
             android:id="@+id/add_repair_title"
             android:layout_width="match_parent"
@@ -29,6 +36,13 @@
             android:inputType="text"
             android:paddingHorizontal="20dp"
             android:paddingVertical="10dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/repair_description" />
 
         <EditText
             android:id="@+id/add_repair_description"
