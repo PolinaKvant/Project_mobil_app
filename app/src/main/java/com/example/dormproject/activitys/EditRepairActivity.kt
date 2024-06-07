@@ -25,8 +25,11 @@ import kotlinx.coroutines.withContext
 
 class EditRepairActivity : AppCompatActivity() {
 
+    // Ленивая инициализация API для ролей и ремонтов
     private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val repairApi: RepairApi by lazy { ApiService.createService(RepairApi::class.java) }
+
+    // Ленивая инициализация полей ввода и кнопок
     private val titleInput: EditText by lazy { findViewById(R.id.edit_repair_title) }
     private val descriptionInput: EditText by lazy { findViewById(R.id.edit_repair_description) }
     private val statusSpinner: Spinner by lazy { findViewById(R.id.edit_repair_status) }
@@ -36,30 +39,35 @@ class EditRepairActivity : AppCompatActivity() {
     private val cancelButton: Button by lazy { findViewById(R.id.edit_repair_cancel) }
     private val submitButton: Button by lazy { findViewById(R.id.edit_repair_submit) }
 
+    // Метод onCreate, вызывается при создании активности
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge() // Включение поддержки отступов для системных окон
         setContentView(R.layout.activity_edit_repair)
-        setupSpinner()
-        setupWindowInsets()
+        setupSpinner() // Настройка спиннера для выбора статуса
+        setupWindowInsets() // Настройка отступов для системных окон
 
+        // Получение ID элемента из интента
         val itemId = intent.getSerializableExtra("itemID") as? Int
         itemId?.let {
-            loadData(it)
+            loadData(it) // Загрузка данных о ремонте по ID
         }
 
+        // Обработка нажатия кнопки отмены
         cancelButton.setOnClickListener {
             startActivity(Intent(this, GeneralRepairsActivity::class.java))
             finish()
         }
 
+        // Обработка нажатия кнопки отправки
         submitButton.setOnClickListener {
             itemId?.let {
-                submitData(it)
+                submitData(it) // Отправка данных для обновления информации о ремонте
             }
         }
     }
 
+    // Настройка отступов для системных окон
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -68,6 +76,7 @@ class EditRepairActivity : AppCompatActivity() {
         }
     }
 
+    // Загрузка данных о ремонте по ID
     private fun loadData(itemId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -75,7 +84,7 @@ class EditRepairActivity : AppCompatActivity() {
                 val response = roleApi.getMyRole()
 
                 withContext(Dispatchers.Main) {
-                    populateFields(repair, response.roleId)
+                    populateFields(repair, response.roleId) // Заполнение полей ввода данными о ремонте
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -85,6 +94,7 @@ class EditRepairActivity : AppCompatActivity() {
         }
     }
 
+    // Настройка спиннера для выбора статуса
     private fun setupSpinner() {
         val listGuestStatuses = listOf("Создана", "Архивирована", "Выполнена", "В работе")
         val arrayAdapter =
@@ -93,6 +103,7 @@ class EditRepairActivity : AppCompatActivity() {
         statusSpinner.adapter = arrayAdapter
     }
 
+    // Заполнение полей ввода данными о ремонте
     private fun populateFields(repair: ReqRepairGetRepairByIdResponse, roleId: Int) {
         if (repair.guestRequestList.isEmpty()) {
             showToast("Невозможно отредактировать запись")
@@ -122,10 +133,10 @@ class EditRepairActivity : AppCompatActivity() {
                 showToast("Вы не можете редактировать запись")
                 startActivity(Intent(this, GeneralRepairsActivity::class.java))
             }
-
         }
     }
 
+    // Получение позиции для спиннера на основе ID статуса
     private fun getStatusSelection(statusId: Int): Int {
         return when (statusId) {
             0 -> 0
@@ -135,11 +146,13 @@ class EditRepairActivity : AppCompatActivity() {
         }
     }
 
+    // Установка видимости для переданных представлений
     private fun setVisibility(isVisible: Boolean, vararg views: View?) {
         val visibility = if (isVisible) View.VISIBLE else View.GONE
         views.forEach { it?.visibility = visibility }
     }
 
+    // Отправка данных для обновления информации о ремонте
     private fun submitData(itemId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -172,6 +185,7 @@ class EditRepairActivity : AppCompatActivity() {
         }
     }
 
+    // Получение ID статуса из выбранного элемента спиннера
     private fun getStatusIdFromSpinner(status: String): Int {
         return when (status) {
             "Создана" -> 0
@@ -181,6 +195,7 @@ class EditRepairActivity : AppCompatActivity() {
         }
     }
 
+    // Показ сообщения Toast
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

@@ -25,8 +25,11 @@ import kotlinx.coroutines.withContext
 
 class EditGuestActivity : AppCompatActivity() {
 
+    // Ленивая инициализация API для ролей и гостей
     private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val guestApi: GuestApi by lazy { ApiService.createService(GuestApi::class.java) }
+
+    // Ленивая инициализация полей ввода и кнопок
     private val fullNameInput: EditText by lazy { findViewById(R.id.edit_guest_fullName) }
     private val dateInput: EditText by lazy { findViewById(R.id.edit_guest_date) }
     private val timeFromInput: EditText by lazy { findViewById(R.id.edit_guest_timeFrom) }
@@ -40,30 +43,35 @@ class EditGuestActivity : AppCompatActivity() {
     private val cancelButton: Button by lazy { findViewById(R.id.edit_guest_cancel) }
     private val submitButton: Button by lazy { findViewById(R.id.edit_guest_submit) }
 
+    // Метод onCreate, вызывается при создании активности
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge() // Включение поддержки отступов для системных окон
         setContentView(R.layout.activity_edit_guest)
-        setupSpinner()
-        setupWindowInsets()
+        setupSpinner() // Настройка спиннера для выбора статуса
+        setupWindowInsets() // Настройка отступов для системных окон
 
+        // Получение ID элемента из интента
         val itemId = intent.getSerializableExtra("itemID") as? Int
         itemId?.let {
-            loadData(it)
+            loadData(it) // Загрузка данных о госте по ID
         }
 
+        // Обработка нажатия кнопки отмены
         cancelButton.setOnClickListener {
             startActivity(Intent(this, GeneralGuestsActivity::class.java))
             finish()
         }
 
+        // Обработка нажатия кнопки отправки
         submitButton.setOnClickListener {
             itemId?.let {
-                submitData(it)
+                submitData(it) // Отправка данных для обновления информации о госте
             }
         }
     }
 
+    // Настройка отступов для системных окон
     private fun setupWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -72,6 +80,7 @@ class EditGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Загрузка данных о госте по ID
     private fun loadData(itemId: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -79,7 +88,7 @@ class EditGuestActivity : AppCompatActivity() {
                 val response = roleApi.getMyRole()
 
                 withContext(Dispatchers.Main) {
-                    populateFields(guest, response.roleId)
+                    populateFields(guest, response.roleId) // Заполнение полей ввода данными о госте
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -89,6 +98,7 @@ class EditGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Заполнение полей ввода данными о госте
     private fun populateFields(
         guest: ReqGuestGetGuestByIdResponse, roleId: Int
     ) {
@@ -108,10 +118,12 @@ class EditGuestActivity : AppCompatActivity() {
                 timeFromInput.setText(timeFrom)
                 timeToInput.setText(timeTo)
                 statusSpinner.setSelection(
-                    if (statusId == 0) 0
-                    else if (statusId == 1) 1
-                    else if (statusId == 2) 2
-                    else 3
+                    when (statusId) {
+                        0 -> 0
+                        1 -> 1
+                        2 -> 2
+                        else -> 3
+                    }
                 )
             }
             setVisibility(roleId != 1, statusSpinner, statusSpinnerText)
@@ -139,11 +151,13 @@ class EditGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Установка видимости для переданных представлений
     private fun setVisibility(isVisible: Boolean, vararg views: View?) {
         val visibility = if (isVisible) View.VISIBLE else View.GONE
         views.forEach { it?.visibility = visibility }
     }
 
+    // Отправка данных для обновления информации о госте
     private fun submitData(itemId: Int) {
         if (validateInputs()) {
             CoroutineScope(Dispatchers.Main).launch {
@@ -168,6 +182,7 @@ class EditGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Настройка спиннера для выбора статуса
     private fun setupSpinner() {
         val listGuestStatuses = listOf("Создана", "Принята", "Отклонена", "Архивирована")
         val arrayAdapter =
@@ -176,6 +191,7 @@ class EditGuestActivity : AppCompatActivity() {
         statusSpinner.adapter = arrayAdapter
     }
 
+    // Получение ID статуса из выбранного элемента спиннера
     private fun getStatusIdFromSpinner(status: String): Int {
         return when (status) {
             "Создана" -> 0
@@ -185,6 +201,7 @@ class EditGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Проверка валидности полей ввода
     private fun validateInputs(): Boolean {
         var isValid = true
 
@@ -211,6 +228,7 @@ class EditGuestActivity : AppCompatActivity() {
         return isValid
     }
 
+    // Показ сообщения Toast
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

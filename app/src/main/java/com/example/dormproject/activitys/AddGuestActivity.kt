@@ -19,7 +19,10 @@ import kotlinx.coroutines.launch
 
 class AddGuestActivity : AppCompatActivity() {
 
+    // Ленивая инициализация API для работы с гостями
     private val guestApi: GuestApi by lazy { ApiService.createService(GuestApi::class.java) }
+
+    // Ленивая инициализация полей ввода и кнопок
     private val fullNameInput by lazy { findViewById<EditText>(R.id.add_guest_fullName) }
     private val dateInput by lazy { findViewById<EditText>(R.id.add_guest_date) }
     private val timeFromInput by lazy { findViewById<EditText>(R.id.add_guest_timeFrom) }
@@ -27,23 +30,31 @@ class AddGuestActivity : AppCompatActivity() {
     private val cancelButton by lazy { findViewById<Button>(R.id.add_guest_cancel) }
     private val submitButton by lazy { findViewById<Button>(R.id.add_guest_submit) }
 
+    // Метод onCreate, вызывается при создании активности
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_guest)
+
+        // Установка отступов для системных окон
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
+        // Обработка нажатия кнопки отмены
         cancelButton.setOnClickListener {
             startActivity(Intent(this, GeneralGuestsActivity::class.java))
         }
 
+        // Обработка нажатия кнопки отправки
         submitButton.setOnClickListener {
+            // Проверка валидности введенных данных
             if (validateInputs()) {
+                // Запуск корутины для выполнения сетевого запроса
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
+                        // Отправка запроса на создание нового гостя
                         val response = guestApi.reqGuestCreateGuest(
                             ReqGuestCreateGuestRequest(
                                 fullNameInput.text.toString(),
@@ -53,6 +64,7 @@ class AddGuestActivity : AppCompatActivity() {
                             )
                         )
 
+                        // Проверка ответа и отображение результата
                         if (response.fullName.isNotEmpty()) {
                             runOnUiThread {
                                 Toast.makeText(this@AddGuestActivity, "Заявка создана", Toast.LENGTH_SHORT).show()
@@ -60,6 +72,7 @@ class AddGuestActivity : AppCompatActivity() {
                             }
                         }
                     } catch (e: Exception) {
+                        // Обработка ошибки и отображение сообщения
                         runOnUiThread {
                             Toast.makeText(this@AddGuestActivity, "Проблема с подключением, Код ошибки: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
@@ -69,6 +82,7 @@ class AddGuestActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для проверки валидности введенных данных
     private fun validateInputs(): Boolean {
         var isValid = true
 

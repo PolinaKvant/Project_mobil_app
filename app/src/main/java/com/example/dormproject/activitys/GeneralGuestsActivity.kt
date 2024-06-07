@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 
 class GeneralGuestsActivity : AppCompatActivity() {
 
+    // Ленивая инициализация API для ролей и гостей
     private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val guestApi: GuestApi by lazy { ApiService.createService(GuestApi::class.java) }
     private val itemList: RecyclerView by lazy { findViewById<RecyclerView>(R.id.guestList) }
@@ -37,7 +38,7 @@ class GeneralGuestsActivity : AppCompatActivity() {
         lateinit var cookieManager: CookieManager
 
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge() // Включение поддержки отступов для системных окон
         setContentView(R.layout.activity_general_guests)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,6 +48,7 @@ class GeneralGuestsActivity : AppCompatActivity() {
 
         navBar.selectedItemId = R.id.menu_guests
 
+        // Настройка действий для элементов навигационной панели
         navBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_guests -> {
@@ -58,7 +60,7 @@ class GeneralGuestsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_logout -> {
-                    ApiService.logout()
+                    ApiService.logout() // Выход из аккаунта
                     startActivity(Intent(this, MainActivity::class.java))
                     true
                 }
@@ -66,14 +68,16 @@ class GeneralGuestsActivity : AppCompatActivity() {
             }
         }
 
-        setNewList()
-        hideAddButton()
+        setNewList() // Установка нового списка гостей
+        hideAddButton() // Скрытие кнопки добавления
 
+        // Обработка нажатия кнопки добавления гостя
         addGuestButton.setOnClickListener {
             startActivity(Intent(this, AddGuestActivity::class.java))
         }
     }
 
+    // Метод для скрытия кнопки добавления в зависимости от роли пользователя
     private fun hideAddButton() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -94,13 +98,14 @@ class GeneralGuestsActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для удаления элемента
     private fun deleteItem(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 guestApi.reqGuestDeleteGuestByIdRequest(id)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@GeneralGuestsActivity, "Заявка удалена", Toast.LENGTH_SHORT).show()
-                    setNewList()
+                    setNewList() // Обновление списка после удаления элемента
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -111,6 +116,7 @@ class GeneralGuestsActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для установки нового списка гостей
     private fun setNewList() {
         CoroutineScope(Dispatchers.IO).launch {
             try {

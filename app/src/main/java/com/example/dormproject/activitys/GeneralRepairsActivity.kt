@@ -25,6 +25,7 @@ import kotlinx.coroutines.withContext
 
 class GeneralRepairsActivity : AppCompatActivity() {
 
+    // Ленивая инициализация API для ролей и ремонтов
     private val roleApi: RoleApi by lazy { ApiService.createService(RoleApi::class.java) }
     private val repairApi: RepairApi by lazy { ApiService.createService(RepairApi::class.java) }
     private val itemList: RecyclerView by lazy { findViewById<RecyclerView>(R.id.repairList) }
@@ -33,7 +34,7 @@ class GeneralRepairsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        enableEdgeToEdge() // Включение поддержки отступов для системных окон
         setContentView(R.layout.activity_general_repairs)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -41,6 +42,7 @@ class GeneralRepairsActivity : AppCompatActivity() {
             insets
         }
 
+        // Установка слушателей для элементов навигационной панели
         navBar.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_guests -> {
@@ -52,7 +54,7 @@ class GeneralRepairsActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_logout -> {
-                    ApiService.logout()
+                    ApiService.logout() // Выход из аккаунта
                     Toast.makeText(this, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, MainActivity::class.java))
                     true
@@ -61,20 +63,22 @@ class GeneralRepairsActivity : AppCompatActivity() {
             }
         }
 
-        setNewList()
-        hideAddButton()
+        setNewList() // Установка нового списка ремонтов
+        hideAddButton() // Скрытие кнопки добавления в зависимости от роли пользователя
 
+        // Обработка нажатия кнопки добавления ремонта
         addRepairButton.setOnClickListener {
             startActivity(Intent(this, AddRepairActivity::class.java))
         }
     }
 
+    // Метод для скрытия кнопки добавления в зависимости от роли пользователя
     private fun hideAddButton() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = roleApi.getMyRole()
                 withContext(Dispatchers.Main) {
-                    if (response.roleId == 3) {
+                    if (response.roleId == 3) { // Роль студента
                         addRepairButton.visibility = Button.GONE
                     } else {
                         addRepairButton.visibility = Button.VISIBLE
@@ -89,13 +93,14 @@ class GeneralRepairsActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для удаления элемента
     private fun deleteItem(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 repairApi.reqRepairDeleteRepairByIdRequest(id)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(this@GeneralRepairsActivity, "Заявка удалена", Toast.LENGTH_SHORT).show()
-                    setNewList()
+                    setNewList() // Обновление списка после удаления элемента
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
@@ -106,6 +111,7 @@ class GeneralRepairsActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для установки нового списка ремонтов
     private fun setNewList() {
         CoroutineScope(Dispatchers.IO).launch {
             try {
