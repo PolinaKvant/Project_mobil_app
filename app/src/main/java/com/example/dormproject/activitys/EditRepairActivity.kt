@@ -118,10 +118,11 @@ class EditRepairActivity : AppCompatActivity() {
                 descriptionInputText,
             )
 
-            if (repair.guestRequestList[0].statusId != 0) {
+            if (roleId == 1 && repair.guestRequestList[0].statusId != 0) {
                 showToast("Вы не можете редактировать запись")
                 startActivity(Intent(this, GeneralRepairsActivity::class.java))
             }
+
         }
     }
 

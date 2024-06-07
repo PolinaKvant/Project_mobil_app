@@ -92,7 +92,7 @@ class EditGuestActivity : AppCompatActivity() {
     private fun populateFields(
         guest: ReqGuestGetGuestByIdResponse, roleId: Int
     ) {
-        if(guest.guestRequestList.isEmpty()) {
+        if (guest.guestRequestList.isEmpty()) {
             showToast("Невозможно отредактировать запись")
             startActivity(
                 Intent(
@@ -127,10 +127,14 @@ class EditGuestActivity : AppCompatActivity() {
                 timeToInputText
             )
 
-            if (guest.guestRequestList[0].statusId != 0) {
+            if (roleId == 1 && guest.guestRequestList[0].statusId != 0) {
                 showToast("Вы не можете редактировать запись")
-                startActivity(Intent(this, GeneralGuestsActivity::class.java))
-                finish()
+                startActivity(
+                    Intent(
+                        this@EditGuestActivity,
+                        GeneralGuestsActivity::class.java
+                    )
+                )
             }
         }
     }

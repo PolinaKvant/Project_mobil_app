@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dormproject</string>
+    <string name="app_name">Общежитие</string>
     <string name="full_name_guest">Полное имя гостя</string>
     <string name="guest_date_text">Дата ГГГГ-ММ-ДД</string>
     <string name="guest_timeFrom_text">С ЧЧ:ММ:CC</string>
